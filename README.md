@@ -8,7 +8,7 @@ This was a project done for UT Austin's Deep Learning Course in Summer 2021. We 
 
 ![Our Agents against the AI (highest difficulty)](media/Best_Performing_Agent.gif)  
 
-*Gameplay showing ball chasing, positioning, and reversal when we pass the puck. Red is prediction, Green is truth*
+*Gameplay showing how our agents perform against the highest AI difficulty*
 
 ## Introduction
 
@@ -17,6 +17,59 @@ In this project, we built a SuperTuxKart ice-hockey agent based on a supervised 
 ## Strategies Explored
 
 We decided to try two approaches to implement our agents: a Dagger-based imitation controller and a vision-based controller. In the imitation approach, we collected 4800 images and the corresponding action pairs of the AI set to difficulty level 2 which is the highest difficulty level. A CNN model similar to HW3 was used with 6 outputs. MSELoss with BCEwithLogitsLoss were used to train this classification network. MSELoss was used for continuous outputs like steer and acceleration while BCEwithLogitsLoss was used for other discrete actions. While imitation learning was quite easy to implement, the Dagger part where we need the AI actions to supervise the agent seemed difficult and time-consuming to implement. In the end, we decided on a vision-based controller approach where we detect the puck and steer the agent accordingly. Specifically, we trained a U-net based segmentation network to detect the puck on the image, compute the angle between the kart and the puck, rotate by that angle and go to the puck, then rotate again and push the puck towards the goal. The data collection and methodology is explained in the sections below.
+
+## Network Architecture
+
+We modified the utils.py in the tournament folder to collect
+data in order to train the model. We generated 12,000 frames
+from each of the 4 AI-players. The total size of the dataset
+was 48,000 images, along with the corresponding masks, true
+puck location, and actions taken. The true puck location being
+a 3D world coordinate was transformed to the 2D normalized
+image coordinate using the to-image method. This training
+dataset was used to train the detector network that detects the
+puck location on the frames and then we used the controller
+to reorient the player towards the puck.
+IV. NETWORK ARCHITECTURE (MODEL.PY)
+The overall network architecture is shown below:
+
+![FCN network architecture](media/model.png) 
+
+We implemented the network using class Detector()
+to detect and locate the puck location on each frame and
+change the player’s direction towards the puck. This network
+outputs the predicted heatmap of the puck along with the
+predicted image co-ordinate of the puck’s location in the
+image. The network followed a Fully Convolutional Network
+architecture closely resembling the general U-net architecture,
+with a down-sampling section that doubles the number of
+channels followed by an up-sampling section that halves the
+number of channels. We started with class Initial() shown in
+fig.3 in Appendix that takes in the input image and applies
+two 3x3 convolutions each followed by a Batch normalization,
+ReLU activation. Then, a down-sampling step is implemented
+in class Downsample() shown in fig.4 of the Appendix that is
+called in three blocks of the encoder to downsample the image
+down to the most meaningful pixels. Each down-sampling step
+consists of the repeated application of two 3x3 convolutions
+each followed by a Batch normalization, ReLU activation, and
+a 3x3 max pooling operation with stride 2 for down-sampling.
+Input normalization is applied lazily through an initial Batch
+normalization layer. Then, an up-sampling step is implemented
+in class Upsample() shown in fig.5 of the Appendix that is
+called in three blocks of the decoder to upsample the image
+back to the input size. Each up-sampling section consists of
+a transpose convolution with a stride of 2 and appropriate
+padding to half the number of feature channels followed by
+a Batch normalization and a ReLU activation. Also, each
+up-sample is connected to the corresponding down-sample
+using a residual connection to permit easy backpropagation of
+gradients through the network. Finally, a class Final() shown
+in fig.6 of the Appendix that uses 1x1 convolution to output
+2 channels one of which is used to generate a heatmap of
+the puck while the other is spatially argmaxed using spatial
+argmax(logits) to get the 2D normalized image location of the
+puck.
 
 ## Approach
 
