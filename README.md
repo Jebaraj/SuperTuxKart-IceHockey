@@ -30,10 +30,10 @@ image coordinate using the to-image method. This training
 dataset was used to train the detector network that detects the
 puck location on the frames and then we used the controller
 to reorient the player towards the puck.
-IV. NETWORK ARCHITECTURE (MODEL.PY)
+
 The overall network architecture is shown below:
 
-![FCN network architecture](media/model.png) 
+![FCN network architecture](media/model.PNG) 
 
 We implemented the network using class Detector()
 to detect and locate the puck location on each frame and
@@ -44,11 +44,10 @@ image. The network followed a Fully Convolutional Network
 architecture closely resembling the general U-net architecture,
 with a down-sampling section that doubles the number of
 channels followed by an up-sampling section that halves the
-number of channels. We started with class Initial() shown in
-fig.3 in Appendix that takes in the input image and applies
+number of channels. We started with class Initial() that takes in the input image and applies
 two 3x3 convolutions each followed by a Batch normalization,
 ReLU activation. Then, a down-sampling step is implemented
-in class Downsample() shown in fig.4 of the Appendix that is
+in class Downsample() that is
 called in three blocks of the encoder to downsample the image
 down to the most meaningful pixels. Each down-sampling step
 consists of the repeated application of two 3x3 convolutions
@@ -56,7 +55,7 @@ each followed by a Batch normalization, ReLU activation, and
 a 3x3 max pooling operation with stride 2 for down-sampling.
 Input normalization is applied lazily through an initial Batch
 normalization layer. Then, an up-sampling step is implemented
-in class Upsample() shown in fig.5 of the Appendix that is
+in class Upsample() that is
 called in three blocks of the decoder to upsample the image
 back to the input size. Each up-sampling section consists of
 a transpose convolution with a stride of 2 and appropriate
@@ -64,8 +63,7 @@ padding to half the number of feature channels followed by
 a Batch normalization and a ReLU activation. Also, each
 up-sample is connected to the corresponding down-sample
 using a residual connection to permit easy backpropagation of
-gradients through the network. Finally, a class Final() shown
-in fig.6 of the Appendix that uses 1x1 convolution to output
+gradients through the network. Finally, a class Final() that uses 1x1 convolution to output
 2 channels one of which is used to generate a heatmap of
 the puck while the other is spatially argmaxed using spatial
 argmax(logits) to get the 2D normalized image location of the
