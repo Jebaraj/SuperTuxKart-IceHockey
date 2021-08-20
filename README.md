@@ -6,7 +6,7 @@ This was a project done for UT Austin's Deep Learning Course in Summer 2021. We 
 #### Team Members: Jebaraj Vasudevan, Vishank Bhatia, Mohammed Belcaid, Subramanian Aiyer 
 
 
-![Our Agents against the AI (highest difficulty)](media/Best_Performing_Agent.gif)  
+Our Agents against the AI (highest difficulty): ![Our Agents against the AI (highest difficulty)](media/Best_Performing_Agent.gif)  
 
 *Gameplay showing how our agents perform against the highest AI difficulty*
 
@@ -33,7 +33,7 @@ to reorient the player towards the puck.
 
 The overall network architecture is shown below:
 
-![FCN network architecture](media/model.PNG) 
+FCN network architecture: ![FCN network architecture](media/model.PNG) 
 
 We implemented the network using class Detector()
 to detect and locate the puck location on each frame and
@@ -143,12 +143,12 @@ below a certain threshold, then the recovery routine kicks in.
 The routine for the next few frames reverses the kart towards
 our own goal and helps the kart to get out of any obstacles.
 ### F. Other strategies tried but not implemented
-[1] We tried to implement a routine to always face towards
+* We tried to implement a routine to always face towards
 the opposition goal, once the kart is no longer facing the
 opposition goal. But its drawback was that once we try
 to re-orient the kart towards the opposite goal, we end up
 losing sight of the puck
-[2] We also tried to implement a goalkeeper approach initially
+* We also tried to implement a goalkeeper approach initially
 by having one kart play a defensive role while the
 other kart plays an offensive role. Though this helped to
 win or draw against the AI, it resulted in low scoring
@@ -161,16 +161,16 @@ against the AI and other teams
 Though our controller was consistently winning against the
 AI in all levels both as team 0 and as team 1, it has some
 limitations.
-[1] Specifically, once the controller is out of phase with
+* Specifically, once the controller is out of phase with
 the opposite goal, it no longer takes into account the
 opposition goal position and may end up scoring against
 our own goal instead of the opposite goal
-[2] Also, when both controllers in our team lose sight of
+* Also, when both controllers in our team lose sight of
 the puck, they both fall back to our own goal and keep
 waiting for the puck to appear in their sight, which
 sometimes does not work if the AI player also stops
 playing actively
-[3] The controller performed differently in different platforms
+* The controller performed differently in different platforms
 due to variation though it was able to consistently
 win or draw against the AI in almost all games.
 
