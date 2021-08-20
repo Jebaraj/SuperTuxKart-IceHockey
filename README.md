@@ -6,6 +6,7 @@ This was a project done for UT Austin's Deep Learning Course in Summer 2021. We 
 #### Team Members: Jebaraj Vasudevan, Vishank Bhatia, Mohammed Belcaid, Subramanian Aiyer 
 
 
+![Our Agents against the AI (highest difficulty)](media/Best_Performing_Agent.gif)  
 
 *Gameplay showing ball chasing, positioning, and reversal when we pass the puck. Red is prediction, Green is truth*
 
