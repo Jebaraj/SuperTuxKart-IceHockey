@@ -6,7 +6,7 @@ This was a project done for UT Austin's Deep Learning Course in Summer 2021. We 
 #### Team Members: Jebaraj Vasudevan, Vishank Bhatia, Mohammed Belcaid, Subramanian Aiyer 
 
 
-![Our Agents against the AI (highest difficulty)](media/Best_Performing_Agent.gif)  
+![](media/Best_Performing_Agent.gif)  
 
 *Gameplay showing how our agents perform against the highest AI difficulty*
 
